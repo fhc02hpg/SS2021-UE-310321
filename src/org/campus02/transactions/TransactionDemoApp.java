@@ -9,7 +9,8 @@ public class TransactionDemoApp {
         String path = "D:\\temp\\transactions.csv";
 
         try {
-            ArrayList<Transaction> transactions = TransactionLoader.loadTransactions(path);
+            ArrayList<Transaction> transactions =
+                    TransactionLoader.loadTransactions(path);
 
             Collections.sort(transactions, new PriceProductComparator());
 

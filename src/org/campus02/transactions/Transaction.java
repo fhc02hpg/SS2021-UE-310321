@@ -1,6 +1,8 @@
 package org.campus02.transactions;
 
-public class Transaction {
+import java.io.Serializable;
+
+public class Transaction implements Serializable {
     private final String transactionDate;
     private final String product;
     private final double price;
