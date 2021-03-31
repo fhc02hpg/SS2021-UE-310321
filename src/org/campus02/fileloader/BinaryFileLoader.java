@@ -23,7 +23,7 @@ public class BinaryFileLoader extends GenericFileLoader implements Runnable {
 
             int byteRead;
             while ((byteRead = bis.read()) != -1){
-                CountBytes++;
+                incrementCountBytes(1);
                 bytes.add(byteRead);
             }
             //bis.close();

@@ -8,12 +8,19 @@ public abstract class GenericFileLoader {
     protected String path;
 
     public static int CountBytes;
-    protected static Lock lockObject = new ReentrantLock();
 
+    protected static Lock lockObject = new ReentrantLock();
     protected static void incrementCountBytes(int value) {
         lockObject.lock();
         CountBytes += value;
         lockObject.unlock();
+    }
+
+    protected static Object lock2 = new Object();
+    protected static void incrementCountBytes2(int value) {
+        synchronized (lock2) {
+            CountBytes += value;
+        }
     }
 
     public GenericFileLoader(String path) {
