@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class DemoFileLoaderApp {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
-/*
+
         TextFileLoader textFileLoader = new TextFileLoader("D:\\temp\\er hörte leise.txt");
 
         try {
@@ -19,7 +20,9 @@ public class DemoFileLoaderApp {
 
         System.out.println(GenericFileLoader.CountBytes);
 
+        System.out.println("textFileLoader = " + textFileLoader.getCountVowels());
 
+/*
         BinaryFileLoader binaryFileLoader =
                 new BinaryFileLoader("D:\\temp\\jre-8u281-windows-x64.exe");
         try {
@@ -41,6 +44,7 @@ public class DemoFileLoaderApp {
         String[] fileArr = files.split(";");
         // Liste von Threads erstellen
 
+//        ExecutorService executorService = Executors.newFixedThreadPool(2);
         ArrayList<Thread> threads = new ArrayList<>();
         for (String file : fileArr) {
             System.out.println("verarbeite Datei " + file);
@@ -51,11 +55,14 @@ public class DemoFileLoaderApp {
 
             if (ext.equals("txt")) {
                 TextFileLoader tfl = new TextFileLoader(path + file);
+                //executorService.execute(tfl);
+
                 Thread th = new Thread(tfl);
                 th.start();
                 threads.add(th);
             } else {
                 BinaryFileLoader bfl = new BinaryFileLoader(path + file);
+                //executorService.execute(bfl);
                 Thread th = new Thread(bfl);
                 th.start();
                 threads.add(th);
@@ -73,6 +80,8 @@ public class DemoFileLoaderApp {
                 e.printStackTrace();
             }
         }
+        //executorService.shutdown();
+        //executorService.awaitTermination(1, TimeUnit.MINUTES);
         System.out.println("Total: CountBytes = " + GenericFileLoader.CountBytes);
     }
 }

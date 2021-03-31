@@ -5,12 +5,15 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
 
 public class TextFileLoader extends GenericFileLoader
             implements Runnable
 {
 
     private ArrayList<String> content = new ArrayList<>();
+    private HashMap<Character, Integer> countVowels = new HashMap<>();
 
     public TextFileLoader(String path) {
         super(path);
@@ -18,6 +21,10 @@ public class TextFileLoader extends GenericFileLoader
 
     public ArrayList<String> getContent() {
         return content;
+    }
+
+    public HashMap<Character, Integer> getCountVowels() {
+        return countVowels;
     }
 
     @Override
@@ -44,6 +51,23 @@ public class TextFileLoader extends GenericFileLoader
                 incrementCountBytes(1);
 //                CountBytes += line.length();
 //                CountBytes++;
+
+                for (char c : line.toLowerCase(Locale.ROOT).toCharArray()) {
+                    if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u'){
+
+                        if (countVowels.containsKey(c)) {
+                            //int currentValue = countVowels.get(c);
+                            //currentValue++;
+                            //countVowels.put(c, currentValue);
+
+                            countVowels.put(c, countVowels.get(c) + 1);
+                        }
+                        else {
+                            countVowels.put(c, 1);
+                        }
+                    }
+                }
+
                 content.add(line);
             }
 
