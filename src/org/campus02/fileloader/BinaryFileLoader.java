@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class BinaryFileLoader extends GenericFileLoader {
+public class BinaryFileLoader extends GenericFileLoader implements Runnable {
 
     private ArrayList<Integer> bytes;// = new ArrayList<>();
 
@@ -34,5 +34,14 @@ public class BinaryFileLoader extends GenericFileLoader {
 
     public ArrayList<Integer> getBytes() {
         return bytes;
+    }
+
+    @Override
+    public void run() {
+        try {
+            loadFile();
+        } catch (GenericFileLoadException e) {
+            e.printStackTrace();
+        }
     }
 }

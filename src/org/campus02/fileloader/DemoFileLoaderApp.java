@@ -1,6 +1,9 @@
 package org.campus02.fileloader;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class DemoFileLoaderApp {
     public static void main(String[] args) {
@@ -36,27 +39,40 @@ public class DemoFileLoaderApp {
         String files = scanner.nextLine();
 
         String[] fileArr = files.split(";");
+        // Liste von Threads erstellen
 
-        for(String file : fileArr) {
+        ArrayList<Thread> threads = new ArrayList<>();
+        for (String file : fileArr) {
             System.out.println("verarbeite Datei " + file);
             String ext = file.substring(file.length() - 3);
 
             //String[] arr = file.split("\\.");
             //System.out.println(arr[arr.length - 1]);
-            try
-            {
-                if (ext.equals("txt")) {
-                    TextFileLoader tfl = new TextFileLoader(path + file);
-                    tfl.loadFile();
-                }
-                else {
-                    BinaryFileLoader bfl = new BinaryFileLoader(path + file);
-                    bfl.loadFile();
-                }
-            }catch(GenericFileLoadException ex){
-                ex.printStackTrace();
+
+            if (ext.equals("txt")) {
+                TextFileLoader tfl = new TextFileLoader(path + file);
+                Thread th = new Thread(tfl);
+                th.start();
+                threads.add(th);
+            } else {
+                BinaryFileLoader bfl = new BinaryFileLoader(path + file);
+                Thread th = new Thread(bfl);
+                th.start();
+                threads.add(th);
             }
+
             System.out.println("GenericFileLoader.CountBytes = " + GenericFileLoader.CountBytes);
         }
+
+        // .join()
+        for(Thread th : threads) {
+            try {
+                th.join();
+                System.out.println("Dieser Thread is fertig: " + th.getId());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("Total: CountBytes = " + GenericFileLoader.CountBytes);
     }
 }

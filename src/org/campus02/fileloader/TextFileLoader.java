@@ -6,7 +6,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class TextFileLoader extends GenericFileLoader {
+public class TextFileLoader extends GenericFileLoader
+            implements Runnable
+{
 
     private ArrayList<String> content = new ArrayList<>();
 
@@ -46,6 +48,15 @@ public class TextFileLoader extends GenericFileLoader {
             throw new GenericFileLoadException("Fehler beim Laden von: " + path, e);
         } catch (IOException e) {
             throw new GenericFileLoadException("Fehler beim Laden von: " + path, e);
+        }
+    }
+
+    @Override
+    public void run() {
+        try {
+            loadFile();
+        } catch (GenericFileLoadException e) {
+            e.printStackTrace();
         }
     }
 }
