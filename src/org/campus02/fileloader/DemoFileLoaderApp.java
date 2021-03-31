@@ -39,11 +39,10 @@ public class DemoFileLoaderApp {
         System.out.print("Bitte Pfad eingeben: ");
         String path = scanner.nextLine();
         System.out.print("Bitte Dateien, getrennt durch ; eingeben: ");
+        //"er hörte leise.txt;text.txt;products.dat;jre-8u281-windows-x64.exe"
         String files = scanner.nextLine();
 
         String[] fileArr = files.split(";");
-        // Liste von Threads erstellen
-
 //        ExecutorService executorService = Executors.newFixedThreadPool(2);
         ArrayList<Thread> threads = new ArrayList<>();
         for (String file : fileArr) {
@@ -71,7 +70,6 @@ public class DemoFileLoaderApp {
             System.out.println("GenericFileLoader.CountBytes = " + GenericFileLoader.CountBytes);
         }
 
-        // .join()
         for(Thread th : threads) {
             try {
                 th.join();
