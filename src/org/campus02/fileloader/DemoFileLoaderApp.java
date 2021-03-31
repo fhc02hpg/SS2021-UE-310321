@@ -13,5 +13,16 @@ public class DemoFileLoaderApp {
         }
 
         System.out.println(GenericFileLoader.CountBytes);
+
+
+        BinaryFileLoader binaryFileLoader =
+                new BinaryFileLoader("D:\\temp\\jre-8u281-windows-x64.exe");
+        try {
+            binaryFileLoader.loadFile();
+        } catch (GenericFileLoadException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("GenericFileLoader.CountBytes = " + GenericFileLoader.CountBytes);
     }
 }

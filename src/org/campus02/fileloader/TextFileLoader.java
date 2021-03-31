@@ -4,12 +4,18 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class TextFileLoader extends GenericFileLoader {
 
+    private ArrayList<String> content = new ArrayList<>();
 
     public TextFileLoader(String path) {
         super(path);
+    }
+
+    public ArrayList<String> getContent() {
+        return content;
     }
 
     @Override
@@ -33,6 +39,7 @@ public class TextFileLoader extends GenericFileLoader {
             while ((line = br.readLine()) != null) {
                 CountBytes += line.length();
                 CountBytes++;
+                content.add(line);
             }
 
         } catch (FileNotFoundException e) {
