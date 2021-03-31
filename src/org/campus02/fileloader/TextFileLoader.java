@@ -29,7 +29,6 @@ public class TextFileLoader extends GenericFileLoader {
     */
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))){
-
             String line;
             while ((line = br.readLine()) != null) {
                 CountBytes += line.length();
